@@ -1,4 +1,5 @@
 # Known false positive: a deliberately weak password in the breached-password
 # test fixture, not an API key or a deployable credential.
-99b7d8d86f664912ef81712a15525cd6a86ac4c8:app/services/security.py:generic-api-key:28
+9bc58b58a2f60523e81cbcfb9703ed2d7f727ac8:app/services/security.py:generic-api-key:28
+
 
