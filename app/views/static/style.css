@@ -1,0 +1,16 @@
+body { font-family: system-ui, sans-serif; max-width: 860px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: .5rem; }
+header h1 { font-size: 1.2rem; margin: 0; }
+nav a { margin-right: 1rem; }
+nav form { display: inline; }
+form.stack label { display: block; margin: .6rem 0 .2rem; }
+input[type=text], input[type=email], input[type=password], textarea { width: 100%; padding: .4rem; box-sizing: border-box; }
+button { padding: .4rem .9rem; cursor: pointer; }
+.flash { padding: .6rem; border-radius: 4px; margin: 1rem 0; }
+.flash.error { background: #fde8e8; color: #8a1c1c; }
+.flash.ok { background: #e6f6ea; color: #1e5e2e; }
+table { border-collapse: collapse; width: 100%; }
+th, td { text-align: left; padding: .4rem; border-bottom: 1px solid #eee; }
+.post { border: 1px solid #eee; padding: .6rem; margin: .6rem 0; border-radius: 4px; }
+.post time { color: #777; font-size: .85rem; margin-left: .5rem; }
+.reply { background: #f4f6fa; padding: .8rem; border-radius: 4px; white-space: pre-wrap; }

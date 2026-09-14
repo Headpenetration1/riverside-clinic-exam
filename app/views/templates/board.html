@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Noticeboard - Riverside Clinic{% endblock %}
+{% block content %}
+<h2>Noticeboard</h2>
+<form method="post" class="stack">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="body">Post a question or notice</label>
+  <textarea id="body" name="body" rows="3" maxlength="2000" required></textarea>
+  <p><button type="submit">Post</button></p>
+</form>
+{% for m in messages %}
+<div class="post">
+  <strong>{{ m.author.full_name }}</strong><time>{{ m.created_at.strftime('%Y-%m-%d %H:%M') }}</time>
+  <p>{{ m.body }}</p>
+</div>
+{% else %}
+<p>Nothing posted yet.</p>
+{% endfor %}
+{% endblock %}

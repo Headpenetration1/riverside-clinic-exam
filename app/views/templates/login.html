@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Log in - Riverside Clinic{% endblock %}
+{% block content %}
+<h2>Log in</h2>
+<form method="post" class="stack">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="email">Email</label>
+  <input id="email" name="email" type="email" required autocomplete="username">
+  <label for="password">Password</label>
+  <input id="password" name="password" type="password" required autocomplete="current-password">
+  <p><button type="submit">Log in</button></p>
+</form>
+<p><a href="{{ url_for('pages.forgot_password') }}">Forgot your password?</a></p>
+{% endblock %}

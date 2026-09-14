@@ -1,0 +1,10 @@
+Flask
+Flask-SQLAlchemy
+argon2-cffi
+PyJWT
+cryptography
+python-dotenv
+requests
+pytest
+bandit
+pip-audit

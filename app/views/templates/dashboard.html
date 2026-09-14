@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Documents - Riverside Clinic{% endblock %}
+{% block content %}
+<h2>Documents</h2>
+{% if current_user.role == 'admin' %}
+  <p>Administrators manage accounts and do not have access to clinical documents.</p>
+{% else %}
+  <form method="post" action="{{ url_for('pages.upload') }}" enctype="multipart/form-data" class="stack">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <label for="file">Upload a PDF, PNG or JPEG (max 10 MB)</label>
+    <input id="file" name="file" type="file" accept=".pdf,.png,.jpg,.jpeg" required>
+    <p><button type="submit">Upload</button></p>
+  </form>
+  {% if documents %}
+  <table>
+    <tr><th>File</th>{% if current_user.role == 'clinician' %}<th>Patient</th>{% endif %}<th>Size</th><th>Uploaded</th><th></th></tr>
+    {% for d in documents %}
+    <tr>
+      <td>{{ d.original_name }}</td>
+      {% if current_user.role == 'clinician' %}<td>{{ d.owner.full_name }}</td>{% endif %}
+      <td>{{ (d.size_bytes / 1024) | round(1) }} KB</td>
+      <td>{{ d.uploaded_at.strftime('%Y-%m-%d %H:%M') }}</td>
+      <td><a href="{{ url_for('pages.download', doc_id=d.id) }}">Download</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}<p>No documents yet.</p>{% endif %}
+{% endif %}
+{% endblock %}

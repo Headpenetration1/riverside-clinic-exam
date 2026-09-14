@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  secrets-scan:
+    # runs first and fast: a leaked key should fail the build before anything else
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  test-and-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12"]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+
+      - name: Unit and security tests
+        run: python -m pytest -q
+
+      - name: Static analysis (bandit)
+        # -ll: fail on medium/high severity findings only, so the gate is not noise
+        run: bandit -r app -ll -q
+
+      - name: Dependency vulnerabilities (pip-audit)
+        run: pip-audit -r requirements.txt --strict
+
+      - name: Check that no .env was committed
+        run: test ! -f .env

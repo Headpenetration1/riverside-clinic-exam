@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Assistant - Riverside Clinic{% endblock %}
+{% block content %}
+<h2>Clinic assistant</h2>
+<p>Ask about opening hours, appointments or how the portal works. The assistant cannot see your records and does not give medical advice.</p>
+<form method="post" class="stack">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <label for="message">Your question</label>
+  <textarea id="message" name="message" rows="3" maxlength="1000" required>{{ question }}</textarea>
+  <p><button type="submit">Ask</button></p>
+</form>
+{% if error %}<div class="flash error">{{ error }}</div>{% endif %}
+{% if reply %}<div class="reply">{{ reply }}</div>{% endif %}
+{% endblock %}
